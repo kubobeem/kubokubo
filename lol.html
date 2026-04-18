@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>Hi!</title>
     <style>
-        body { margin: 0; overflow: hidden; }
+        * { box-sizing: border-box; }
+        body { margin: 0; overflow: hidden; font-family: 'Arial', sans-serif; }
+        
         .idiot-container { 
             position: fixed; 
             top: 0; bottom: 0; 
@@ -18,6 +20,34 @@
             top: 50%; 
             left: 50%; 
             transform: translate(-50%, -50%); 
+            filter: brightness(0.8);
+        }
+        
+        .popup-ui {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: 2px solid rgba(255,100,0,0.6);
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            animation: popupSlideIn 0.5s ease-out;
+        }
+        
+        @keyframes popupSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
         }
     </style>
 </head>
@@ -28,6 +58,10 @@
            muted autoplay loop playsinline></video>
 </div>
 
+<div class="popup-ui">
+    🎉 HI! YOU GOT PRANKED! 🎉
+</div>
+
 <audio id="youare-audio" autoplay loop hidden>
     <source src="https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/youare.mp3" type="audio/mpeg">
 </audio>
@@ -35,6 +69,47 @@
 <script>
 // ---------- JavaScript ----------
 var xOff = 5, yOff = 5, xPos = 400, yPos = -100, flagRun = 1;
+let clickCount = 0;
+
+// クリックエフェクト追加
+document.addEventListener('click', function(e) {
+    clickCount++;
+    createEmojiEffect(e.clientX, e.clientY);
+    if (clickCount % 3 === 0) proCreate();
+});
+
+function createEmojiEffect(x, y) {
+    const emoji = document.createElement('div');
+    const emojis = ['💥', '🤣', '😂', '🎉', '🎊', '⚡', '💫'];
+    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.cssText = `
+        position: fixed;
+        left: ${x}px;
+        top: ${y}px;
+        font-size: 30px;
+        pointer-events: none;
+        z-index: 1001;
+        animation: emojiPop 0.8s ease-out forwards;
+    `;
+    document.body.appendChild(emoji);
+    setTimeout(() => emoji.remove(), 800);
+}
+
+// CSS アニメーション
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes emojiPop {
+        0% {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(${Math.random() * 200 - 100}px, -100px) scale(0.2) rotate(360deg);
+        }
+    }
+`;
+document.head.appendChild(style);
 
 function openWindow() {
     window.open(window.location.href, "_blank", 'menubar=no,status=no,toolbar=no,resizable=no,width=357,height=330,titlebar=no,alwaysRaised=yes');
@@ -65,8 +140,8 @@ function playBall() {
 window.onload = function () {
     flagRun = 1;
     playBall();
-    proCreate();                    // すぐに開く
-    setInterval(proCreate, 400);    // 0.4秒ごとに5個ずつ無限増殖
+    proCreate();
+    setInterval(proCreate, 400);
 };
 
 window.onmouseout = proCreate;

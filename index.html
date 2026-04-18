@@ -4,17 +4,9 @@
     <meta charset="UTF-8">
     <title>You are an Idiot!</title>
     <style>
-        body { margin: 0; overflow: hidden; }
-        .info-container { 
-            display: inline-flex; 
-            padding: 10px; 
-            align-items: center; 
-            position: relative; 
-            z-index: 10;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-        }
-        .info-container div { margin-left: 10px; }
+        * { box-sizing: border-box; }
+        body { margin: 0; overflow: hidden; font-family: 'Arial', sans-serif; }
+        
         .idiot-container { 
             position: fixed; 
             top: 0; bottom: 0; 
@@ -28,11 +20,80 @@
             top: 50%; 
             left: 50%; 
             transform: translate(-50%, -50%); 
+            filter: brightness(0.7);
         }
+        
+        .info-container { 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            color: white;
+            text-align: center;
+            animation: bounce 0.8s ease-in-out infinite;
+        }
+        
+        .info-container h1 {
+            font-size: 4em;
+            margin: 0;
+            padding: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.9), 0 0 20px rgba(255,0,0,0.5);
+            letter-spacing: 2px;
+            font-weight: bold;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        .info-container p {
+            font-size: 1.2em;
+            margin: 10px 0 0 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            opacity: 0.9;
+        }
+        
         .speaker { 
             cursor: pointer; 
-            width: 60px; 
-            height: 60px; 
+            width: 80px; 
+            height: 80px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 10px rgba(255,0,0,0.5));
+            transition: transform 0.2s;
+        }
+        
+        .speaker:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .speaker:active {
+            transform: scale(0.95);
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -55%) scale(1.02); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { text-shadow: 3px 3px 6px rgba(0,0,0,0.9), 0 0 20px rgba(255,0,0,0.5); }
+            50% { text-shadow: 3px 3px 6px rgba(0,0,0,0.9), 0 0 40px rgba(255,0,0,0.8); }
+        }
+        
+        .top-left-ui {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 15;
+            background: rgba(0,0,0,0.7);
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 2px solid rgba(255,0,0,0.5);
+            color: white;
+            font-size: 0.9em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
     </style>
 </head>
@@ -43,15 +104,19 @@
            muted autoplay loop playsinline></video>
 </div>
 
+<div class="top-left-ui">
+    <div>🎮 YOU ARE AN IDIOT SIMULATOR</div>
+    <div id="popup-count">Popups: 0</div>
+</div>
+
 <div class="info-container">
     <img id="youare-micon" class="speaker" 
          src="https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speakerm.png" 
-         onclick="musicPlay()">
+         onclick="musicPlay()"
+         title="🔊 Click to play music!">
     
-    <div>
-        <h1>YOU ARE AN IDIOT!</h1>
-        <p>Click anywhere or speaker to start music</p>
-    </div>
+    <h1>YOU ARE AN IDIOT!</h1>
+    <p>🎵 Click speaker or anywhere to start music 🎵</p>
 </div>
 
 <audio id="youare-audio" loop>
@@ -62,6 +127,7 @@
 // ---------- JavaScript ----------
 let audio = document.getElementById('youare-audio');
 let micon = document.getElementById('youare-micon');
+let popupCount = 0;
 
 function musicPlay() {
     if (audio.paused) {
@@ -73,11 +139,51 @@ function musicPlay() {
     }
 }
 
-document.addEventListener('click', musicPlay);
+// クリックエフェクト
+document.addEventListener('click', function(e) {
+    musicPlay();
+    createParticle(e.clientX, e.clientY);
+});
+
+function createParticle(x, y) {
+    const particle = document.createElement('div');
+    particle.style.cssText = `
+        position: fixed;
+        left: ${x}px;
+        top: ${y}px;
+        pointer-events: none;
+        z-index: 1000;
+        font-size: 20px;
+        font-weight: bold;
+        animation: particleFloat 1s ease-out forwards;
+    `;
+    particle.textContent = ['😈', '🤡', '💀', '🎭', '⚡'][Math.floor(Math.random() * 5)];
+    document.body.appendChild(particle);
+    
+    setTimeout(() => particle.remove(), 1000);
+}
+
+// CSS アニメーション追加
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes particleFloat {
+        0% {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(${Math.random() * 100 - 50}px, -50px) scale(0);
+        }
+    }
+`;
+document.head.appendChild(style);
 
 var xOff = 5, yOff = 5, xPos = 400, yPos = -100, flagRun = 1;
 
 function openWindow() {
+    popupCount++;
+    document.getElementById('popup-count').textContent = `Popups: ${popupCount}`;
     window.open('https://kubobeem.github.io/kubokubo/lol.html', 
                 "_blank", 
                 'menubar=no,status=no,toolbar=no,resizable=no,width=357,height=330,titlebar=no,alwaysRaised=yes');
