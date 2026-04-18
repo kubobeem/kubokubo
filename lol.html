@@ -68,15 +68,12 @@
 
 <script>
 // ---------- JavaScript ----------
-var xOff = 5, yOff = 5, xPos = 400, yPos = -100, flagRun = 1;
 let clickCount = 0;
-const splitIntervalMs = 1200;
 
 // クリックエフェクト追加
 document.addEventListener('click', function(e) {
     clickCount++;
     createEmojiEffect(e.clientX, e.clientY);
-    if (clickCount % 3 === 0) proCreate();
 });
 
 function createEmojiEffect(x, y) {
@@ -112,52 +109,12 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-function openWindow() {
-    window.open(window.location.href, "_blank", 'menubar=no,status=no,toolbar=no,resizable=no,width=357,height=330,titlebar=no,alwaysRaised=yes');
-}
-
-function proCreate() {	
-    // 各ウィンドウが1つずつ子を作るので、世代ごとに概ね2^n増殖
-    openWindow();
-}
-
-function newXlt() { xOff = Math.ceil(-6 * Math.random()) * 5 - 10; window.focus(); }
-function newXrt() { xOff = Math.ceil(7 * Math.random())  * 5 - 10; window.focus(); }
-function newYup() { yOff = Math.ceil(-6 * Math.random()) * 5 - 10; window.focus(); }
-function newYdn() { yOff = Math.ceil(7 * Math.random()) * 5 - 10; window.focus(); }
-
-function playBall() {
-    xPos += xOff; yPos += yOff;
-    if (xPos > screen.width - 357) newXlt();
-    if (xPos < 0) newXrt();
-    if (yPos > screen.height - 330) newYup();
-    if (yPos < 0) newYdn();
-    
-    if (flagRun == 1) {
-        window.moveTo(xPos, yPos);
-        setTimeout(playBall, 1);
-    }
-}
-
 window.onload = function () {
-    flagRun = 1;
-    playBall();
-    proCreate();
-    setInterval(proCreate, splitIntervalMs);
+    const banner = document.querySelector('.popup-ui');
+    setInterval(function() {
+        banner.style.opacity = banner.style.opacity === '0.7' ? '1' : '0.7';
+    }, 400);
 };
-
-window.onmouseout = proCreate;
-window.oncontextmenu = () => false;
-
-window.onkeydown = function(e) {
-    if ([17,18,46,115].includes(e.keyCode)) {
-        for(let i=0; i<15; i++) alert("UwU");
-        alert("You dumb?????!");
-        proCreate();
-    }
-};
-
-window.onbeforeunload = () => "UwU";
 // ---------- ここまで ----------
 </script>
 </body>

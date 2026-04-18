@@ -95,6 +95,75 @@
             font-size: 0.9em;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
+
+        .playfield {
+            position: fixed;
+            inset: 0;
+            z-index: 8;
+            pointer-events: none;
+        }
+
+        .mini-window {
+            position: absolute;
+            width: 170px;
+            height: 110px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.55);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+            background: linear-gradient(145deg, rgba(255,90,90,0.92), rgba(50,0,0,0.88));
+            pointer-events: auto;
+            animation: popIn 180ms ease-out;
+        }
+
+        .mini-window-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 28px;
+            padding: 0 8px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 12px;
+            background: rgba(0,0,0,0.35);
+        }
+
+        .mini-window-close {
+            width: 22px;
+            height: 22px;
+            border: 0;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .mini-window-close:hover {
+            background: rgba(255,255,255,0.35);
+        }
+
+        .mini-window-body {
+            display: grid;
+            place-items: center;
+            height: calc(100% - 28px);
+            color: #fff;
+            font-size: 20px;
+            font-weight: 800;
+            text-shadow: 1px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.82);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 <body>
@@ -106,8 +175,11 @@
 
 <div class="top-left-ui">
     <div>🎮 YOU ARE AN IDIOT SIMULATOR</div>
-    <div id="popup-count">Popups: 0</div>
+    <div id="popup-count">Windows: 0</div>
+    <div id="split-count">Splits: 0</div>
 </div>
+
+<div id="playfield" class="playfield"></div>
 
 <div class="info-container">
     <img id="youare-micon" class="speaker" 
@@ -127,7 +199,14 @@
 // ---------- JavaScript ----------
 let audio = document.getElementById('youare-audio');
 let micon = document.getElementById('youare-micon');
-let popupCount = 0;
+const playfield = document.getElementById('playfield');
+const popupCountEl = document.getElementById('popup-count');
+const splitCountEl = document.getElementById('split-count');
+
+let windowCount = 0;
+let splitCount = 0;
+const splitFactor = 3;
+const maxWindows = 180;
 
 function musicPlay() {
     if (audio.paused) {
@@ -179,60 +258,65 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-var xOff = 5, yOff = 5, xPos = 400, yPos = -100, flagRun = 1;
-const splitIntervalMs = 1200;
-
-function openWindow() {
-    popupCount++;
-    document.getElementById('popup-count').textContent = `Popups: ${popupCount}`;
-    window.open('https://kubobeem.github.io/kubokubo/lol.html', 
-                "_blank", 
-                'menubar=no,status=no,toolbar=no,resizable=no,width=357,height=330,titlebar=no,alwaysRaised=yes');
+function updateStats() {
+    popupCountEl.textContent = `Windows: ${windowCount}`;
+    splitCountEl.textContent = `Splits: ${splitCount}`;
 }
 
-function proCreate() {	
-    // 1ウィンドウが1ウィンドウを増やすことで、全体がほぼ2^nで増える
-    openWindow();
+function randomPos(max, size) {
+    return Math.max(0, Math.floor(Math.random() * Math.max(1, max - size)));
 }
 
-function newXlt() { xOff = Math.ceil(-6 * Math.random()) * 5 - 10; window.focus(); }
-function newXrt() { xOff = Math.ceil(7 * Math.random())  * 5 - 10; window.focus(); }
-function newYup() { yOff = Math.ceil(-6 * Math.random()) * 5 - 10; window.focus(); }
-function newYdn() { yOff = Math.ceil(7 * Math.random()) * 5 - 10; window.focus(); }
+function createMiniWindow(x, y) {
+    if (windowCount >= maxWindows) {
+        return;
+    }
 
-function playBall() {
-    xPos += xOff; yPos += yOff;
-    if (xPos > screen.width - 357) newXlt();
-    if (xPos < 0) newXrt();
-    if (yPos > screen.height - 330) newYup();
-    if (yPos < 0) newYdn();
-    
-    if (flagRun == 1) {
-        window.moveTo(xPos, yPos);
-        setTimeout(playBall, 1);
+    const node = document.createElement('div');
+    node.className = 'mini-window';
+    node.style.left = `${x}px`;
+    node.style.top = `${y}px`;
+
+    node.innerHTML = `
+        <div class="mini-window-header">
+            <span>ALERT</span>
+            <button class="mini-window-close" aria-label="close">×</button>
+        </div>
+        <div class="mini-window-body">UwU</div>
+    `;
+
+    const closeButton = node.querySelector('.mini-window-close');
+    closeButton.addEventListener('click', function(event) {
+        event.stopPropagation();
+        const rect = node.getBoundingClientRect();
+        node.remove();
+        windowCount = Math.max(0, windowCount - 1);
+        splitCount += 1;
+
+        for (let i = 0; i < splitFactor; i++) {
+            const spawnX = Math.max(0, Math.min(window.innerWidth - 170, Math.floor(rect.left + (Math.random() * 240 - 120))));
+            const spawnY = Math.max(0, Math.min(window.innerHeight - 110, Math.floor(rect.top + (Math.random() * 180 - 90))));
+            createMiniWindow(spawnX, spawnY);
+        }
+
+        createParticle(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        updateStats();
+    });
+
+    playfield.appendChild(node);
+    windowCount += 1;
+    updateStats();
+}
+
+function seedWindows(count) {
+    for (let i = 0; i < count; i++) {
+        createMiniWindow(randomPos(window.innerWidth, 170), randomPos(window.innerHeight, 110));
     }
 }
 
 window.onload = function () {
-    flagRun = 1;
-    playBall();
-    // 親となる最初の1つだけ生成。以降はlol.html側で自己分裂する
-    proCreate();
+    seedWindows(6);
 };
-
-window.onmouseout = proCreate;
-
-window.oncontextmenu = () => false;
-
-window.onkeydown = function(e) {
-    if ([17,18,46,115].includes(e.keyCode)) {
-        for(let i=0; i<20; i++) alert("UwU");
-        alert("You dumb?????!");
-        proCreate();
-    }
-};
-
-window.onbeforeunload = () => "UwU";
 // ---------- ここまで ----------
 </script>
 </body>
