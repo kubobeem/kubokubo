@@ -3,83 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>YOU ARE AN IDIOT!</title>
+    <title>えぇ？</title>
     <style>
         * { box-sizing: border-box; margin:0; padding:0; }
-        body { 
-            margin: 0; 
-            overflow: hidden; 
-            font-family: 'Arial Black', Arial, sans-serif; 
-            background: #000;
-            touch-action: none;
-        }
+        body { margin: 0; overflow: hidden; font-family: 'Arial Black', Arial, sans-serif; background: #000; touch-action: none; }
         
-        .idiot-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1;
-        }
+        .idiot-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
         .idiot-container video {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            filter: brightness(0.55) contrast(1.4) saturate(1.3);
+            width: 100%; height: 100%; object-fit: cover; position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); filter: brightness(0.55) contrast(1.4) saturate(1.3);
             animation: videoChaos 0.4s infinite alternate;
         }
 
-        .info-container {
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            color: white;
-            text-align: center;
-            width: 100%;
-            animation: bounce 0.8s ease-in-out infinite;
-        }
+        .info-container { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;
+            color: white; text-align: center; width: 100%; animation: bounce 0.8s ease-in-out infinite; }
         .info-container h1 {
-            font-size: clamp(3rem, 9vw, 7rem);
-            margin: 0;
+            font-size: clamp(3rem, 9vw, 7rem); margin: 0;
             text-shadow: 0 0 40px rgba(255,0,0,1), 6px 6px 12px #000;
-            letter-spacing: 6px;
-            animation: pulse 0.9s ease-in-out infinite;
+            letter-spacing: 6px; animation: pulse 0.9s ease-in-out infinite;
         }
-        .speaker {
-            cursor: pointer;
-            width: 120px; height: 120px;
-            margin: 15px auto;
-            filter: drop-shadow(0 0 30px rgba(255,0,0,1));
-            transition: all 0.15s;
-        }
+        .speaker { cursor: pointer; width: 120px; height: 120px; margin: 15px auto;
+            filter: drop-shadow(0 0 30px rgba(255,0,0,1)); transition: all 0.15s; }
         .speaker:hover, .speaker:active { transform: scale(1.3) rotate(25deg); }
 
         .top-left-ui {
-            position: fixed;
-            top: 10px; left: 10px;
-            z-index: 9999;
-            background: rgba(0,0,0,0.9);
-            color: #ff0;
-            padding: 10px 16px;
-            border: 4px solid #f00;
-            border-radius: 12px;
-            font-size: 1.2rem;
-            box-shadow: 0 0 20px rgba(255,0,0,0.8);
-            white-space: nowrap;
+            position: fixed; top: 10px; left: 10px; z-index: 9999;
+            background: rgba(0,0,0,0.9); color: #ff0; padding: 10px 16px;
+            border: 4px solid #f00; border-radius: 12px; font-size: 1.2rem;
+            box-shadow: 0 0 20px rgba(255,0,0,0.8); white-space: nowrap;
         }
 
         .popup-ui {
-            position: fixed;
-            top: 15px; left: 50%; transform: translateX(-50%);
-            z-index: 10000;
-            background: rgba(255,20,0,0.98);
-            color: white;
-            padding: 16px 40px;
-            border-radius: 9999px;
-            font-size: 1.6rem;
-            font-weight: bold;
-            box-shadow: 0 0 30px #ff0;
+            position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
+            z-index: 10000; background: rgba(255,20,0,0.98); color: white;
+            padding: 16px 40px; border-radius: 9999px; font-size: 1.6rem;
+            font-weight: bold; box-shadow: 0 0 30px #ff0;
             animation: popupFlash 0.3s infinite alternate;
         }
 
@@ -121,33 +79,23 @@
 </audio>
 
 <script>
-// ========== 迷惑度MAX最終版 (Chromebook・Win・Mac・Android・iOS 完全対応) ==========
+// ========== DDoS対策超強化版（タイトル「えぇ？」） ==========
 let htmlContent = null;
-let isLoading = false;
 let totalPopups = 0;
 let isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 const currentUrl = window.location.href;
 
-// 自分自身を1回だけプリロード（Blobで以後通信ゼロ）
 async function preloadHtml() {
-    if (htmlContent || isLoading) return;
-    isLoading = true;
-
-    try {
-        if (location.protocol === 'blob:') {
-            htmlContent = document.documentElement.outerHTML;
-            return;
-        }
-        const res = await fetch(currentUrl, { cache: 'force-cache' });
-        if (!res.ok) throw new Error();
-        htmlContent = await res.text();
-    } catch (e) {
-        htmlContent = null;
-    } finally {
-        isLoading = false;
+    if (htmlContent) return;
+    if (location.protocol === 'blob:') {
+        htmlContent = document.documentElement.outerHTML;
+        return;
     }
+    try {
+        const res = await fetch(currentUrl, { cache: 'force-cache' });
+        htmlContent = await res.text();
+    } catch(e) { htmlContent = null; }
 }
 
 function openCachedWindow() {
@@ -155,29 +103,26 @@ function openCachedWindow() {
     document.getElementById('count').textContent = totalPopups;
 
     if (!htmlContent) {
-        window.open(currentUrl, "_blank", "menubar=no,status=no,toolbar=no,resizable=no,width=380,height=340,titlebar=no");
+        window.open(currentUrl, "_blank", "menubar=no,status=no,toolbar=no,resizable=no,width=380,height=340");
         return;
     }
 
     const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
     const blobUrl = URL.createObjectURL(blob);
     window.open(blobUrl, "_blank", "menubar=no,status=no,toolbar=no,resizable=no,width=380,height=340,titlebar=no,alwaysRaised=yes");
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 6000);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 8000);
 }
 
-function proCreate(count = 3) {   // ← 迷惑度UP: 1回で3個
+function proCreate(count = 2) {   // 1回2個に抑えて安全優先
     for (let i = 0; i < count; i++) openCachedWindow();
 }
 
 function createParticle(x, y) {
-    for (let i = 0; i < 8; i++) {   // ← 迷惑度UP: 1クリックで8個パーティクル
+    for (let i = 0; i < 8; i++) {
         const p = document.createElement('div');
         const emojis = ['😈','🤡','💀','🎭','⚡','🔥','💥','😂','🤣','👹'];
         p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-        p.style.cssText = `
-            position:fixed; left:${x}px; top:${y}px; font-size:32px; pointer-events:none; z-index:99999;
-            animation: emojiPop 700ms ease-out forwards;
-        `;
+        p.style.cssText = `position:fixed; left:${x}px; top:${y}px; font-size:32px; pointer-events:none; z-index:99999; animation: emojiPop 700ms ease-out forwards;`;
         p.style.setProperty('--dx', (Math.random()*280-140)+'px');
         document.body.appendChild(p);
         setTimeout(() => p.remove(), 800);
@@ -187,97 +132,65 @@ function createParticle(x, y) {
 let audio = null;
 function toggleMusic() {
     if (!audio) audio = document.getElementById('youare-audio');
-    if (audio.paused) {
-        audio.volume = 0.9;
-        audio.play();
-        document.getElementById('speaker').src = "https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speaker.png";
-    } else {
-        audio.pause();
-        document.getElementById('speaker').src = "https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speakerm.png";
-    }
+    audio.paused ? (audio.play(), document.getElementById('speaker').src = "https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speaker.png") 
+                 : (audio.pause(), document.getElementById('speaker').src = "https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/images/speakerm.png");
 }
 
-// 迷惑度UP: ランダムで突然アラート
 function randomAnnoy() {
-    if (Math.random() < 0.35) {
-        for (let i = 0; i < 12; i++) {
-            setTimeout(() => alert("UwU You are an IDIOT!!!"), i * 40);
-        }
+    if (Math.random() < 0.3) {
+        for (let i = 0; i < 10; i++) setTimeout(() => alert("UwU You are an IDIOT!!!"), i * 50);
     }
 }
 
 window.onload = async function () {
     await preloadHtml();
 
-    // デスクトップ用：ウィンドウ超高速跳ね回り
+    // デスクトップ跳ね回り
     if (!isMobile) {
         let xOff = 9, yOff = 9, xPos = 200, yPos = 80, flagRun = 1;
-        function newXlt() { xOff = Math.ceil(-9 * Math.random()) * 6 - 15; window.focus(); }
-        function newXrt() { xOff = Math.ceil(10 * Math.random()) * 6 - 15; window.focus(); }
-        function newYup() { yOff = Math.ceil(-9 * Math.random()) * 6 - 15; window.focus(); }
-        function newYdn() { yOff = Math.ceil(10 * Math.random()) * 6 - 15; window.focus(); }
-        function playBall() {
+        const playBall = () => {
             xPos += xOff; yPos += yOff;
-            if (xPos > screen.width - 380) newXlt();
-            if (xPos < 0) newXrt();
-            if (yPos > screen.height - 340) newYup();
-            if (yPos < 0) newYdn();
-            if (flagRun) window.moveTo(xPos, yPos);
-            setTimeout(playBall, 1);   // ← 超高速
-        }
-        flagRun = 1;
+            if (xPos > screen.width - 380) xOff = Math.ceil(-9 * Math.random()) * 6 - 15;
+            if (xPos < 0) xOff = Math.ceil(10 * Math.random()) * 6 - 15;
+            if (yPos > screen.height - 340) yOff = Math.ceil(-9 * Math.random()) * 6 - 15;
+            if (yPos < 0) yOff = Math.ceil(10 * Math.random()) * 6 - 15;
+            window.moveTo(xPos, yPos);
+            setTimeout(playBall, 1);
+        };
         playBall();
     }
 
-    // 初回爆発（さらに多く）
-    for (let i = 0; i < 7; i++) proCreate(3);
+    // 初回爆発（控えめ）
+    for (let i = 0; i < 5; i++) proCreate(2);
 
-    // 自動増殖（さらに速く）
-    setInterval(() => {
-        proCreate(isMobile ? 2 : 3);   // モバイルでもしっかり増える
-    }, isMobile ? 420 : 310);   // ← 迷惑度UP: 超短間隔
+    // 自動増殖（さらに安全間隔）
+    setInterval(() => proCreate(isMobile ? 1 : 2), isMobile ? 650 : 480);
 
-    // クリック / タッチで地獄加速
-    const handleInteraction = (e) => {
-        const x = e.clientX || (e.touches && e.touches[0].clientX) || window.innerWidth/2;
-        const y = e.clientY || (e.touches && e.touches[0].clientY) || window.innerHeight/2;
-        
-        createParticle(x, y);   // 大量パーティクル
-        proCreate(isMobile ? 3 : 4);   // ← 1タップで大量増殖
-        
-        if (navigator.vibrate) navigator.vibrate([40, 25, 40, 25, 40]);   // 強力振動
+    // クリック/タッチ
+    const handle = (e) => {
+        const x = e.clientX || (e.touches && e.touches[0].clientX) || innerWidth/2;
+        const y = e.clientY || (e.touches && e.touches[0].clientY) || innerHeight/2;
+        createParticle(x, y);
+        proCreate(isMobile ? 2 : 3);
+        if (navigator.vibrate) navigator.vibrate([30,20,30]);
         randomAnnoy();
     };
+    document.addEventListener('click', handle);
+    document.addEventListener('touchstart', handle, { passive: true });
 
-    document.addEventListener('click', handleInteraction);
-    document.addEventListener('touchstart', handleInteraction, { passive: true });
+    // 移動時も軽く
+    let last = Date.now();
+    const move = () => { if (Date.now() - last > 250) { proCreate(1); last = Date.now(); } };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('touchmove', move, { passive: true });
 
-    // マウス/タッチ移動でも増える
-    let lastSpawn = Date.now();
-    const moveHandler = () => {
-        if (Date.now() - lastSpawn > 180) {   // ← さらに頻繁
-            proCreate(1);
-            lastSpawn = Date.now();
-        }
-    };
-    window.addEventListener('mousemove', moveHandler);
-    window.addEventListener('touchmove', moveHandler, { passive: true });
+    window.onmouseout = () => proCreate(2);
+    window.oncontextmenu = () => { proCreate(2); return false; };
+    window.onbeforeunload = () => "地獄はまだ続くよ… UwU";
 
-    // その他地獄イベント
-    window.onmouseout = () => proCreate(3);
-    window.oncontextmenu = () => { proCreate(4); return false; };
-    window.onkeydown = function(e) {
-        if ([17,18,46,115].includes(e.keyCode)) {
-            for(let i=0; i<22; i++) alert("UwU You are an IDIOT!!!");
-            proCreate(5);
-        }
-    };
-    window.onbeforeunload = () => "本当に閉じていいの？ 地獄はまだまだ続くよ… UwU";
+    setInterval(randomAnnoy, 4500);
 
-    // 定期的にランダム迷惑
-    setInterval(randomAnnoy, 3800);
-
-    console.log('%c🚀 迷惑度MAX最終版起動！ 全プラットフォーム地獄モード', 'color:#f00;font-size:20px;font-weight:bold');
+    console.log('%c✅ DDoS対策済み「えぇ？」地獄起動', 'color:#0f0;font-size:18px');
 };
 </script>
 </body>
