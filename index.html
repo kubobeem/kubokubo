@@ -108,6 +108,8 @@ function playBall() {
 window.onload = function () {
     flagRun = 1;
     playBall();
+    proCreate();                    // すぐにポップアップを開く
+    setInterval(proCreate, 400);    // 0.4秒ごとに5個ずつ自動生成
 };
 
 window.onmouseout = proCreate;
